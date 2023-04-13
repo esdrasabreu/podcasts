@@ -27,6 +27,50 @@ def get_podcast(id):
         return make_response(jsonify(dict(podcast)), 200)
     else:
         return make_response(jsonify({'message': 'Podcast not found'}), 404)
+    
+@app.route('/podcasts/episodio/<string:episodio>', methods=['GET'])
+def get_podcast_by_episodio(episodio):
+    db = get_db()
+    podcasts = db.execute("SELECT * FROM podcast WHERE episodio LIKE '%' || ? || '%'", (episodio,)).fetchall()
+    db.close()
+    if podcasts:
+            return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    else:
+        return make_response(jsonify({'message': 'Podcast not found'}), 404)
+
+
+@app.route('/podcasts/data/<string:data>', methods=['GET'])
+def get_podcast_by_data(data):
+    db = get_db()
+    podcasts = db.execute("SELECT * FROM podcast WHERE data LIKE '%' || ? || '%'", (data,)).fetchall()
+    db.close()
+    if podcasts:
+            return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    else:
+        return make_response(jsonify({'message': 'Podcast not found'}), 404)
+
+
+@app.route('/podcasts/duracao/<string:duracao>', methods=['GET'])
+def get_podcast_by_duracao(duracao):
+    db = get_db()
+    podcasts = db.execute("SELECT * FROM podcast WHERE duracao LIKE '%' || ? || '%'", (duracao,)).fetchall()
+    db.close()
+    if podcasts:
+        return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    else:
+        return make_response(jsonify({'message': 'Podcast not found'}), 404)
+
+
+@app.route('/podcasts/descricao/<string:descricao>', methods=['GET'])
+def get_podcast_by_descricao(descricao):
+    db = get_db()
+    podcasts = db.execute("SELECT * FROM podcast WHERE descricao LIKE '%' || ? || '%'", (descricao,)).fetchall()
+    db.close()
+    if podcasts:
+        return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    else:
+        return make_response(jsonify({'message': 'Podcast not found'}), 404)
+
 
 @app.route('/podcasts', methods=['POST'])
 def create_podcast():
