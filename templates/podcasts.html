@@ -92,31 +92,3 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="pagination">
-            {% if pagination.has_prev %}
-            <a class="page-link"
-                href="{{ url_for('get_podcasts', page=pagination.prev_num, per_page=pagination.per_page) }}">Anterior</a>
-            {% else %}
-            <span class="page-link disabled">Anterior</span>
-            {% endif %}
-
-            {% for page in pagination.iter_pages() %}
-            {% if page %}
-            {% if page == pagination.page %}
-            <span class="page-link current">{{ page }}</span>
-            {% else %}
-            <a class="page-link" href="{{ url_for('get_podcasts', page=page, per_page=pagination.per_page) }}">{{ page
-                }}</a>
-            {% endif %}
-            {% else %}
-            <span class="page-link dots">...</span>
-            {% endif %}
-            {% endfor %}
-
-            {% if pagination.has_next %}
-            <a class="page-link"
-                href="{{ url_for('get_podcasts', page=pagination.next_num, per_page=pagination.per_page) }}">Próxima</a>
-            {% else %}
-            <span class="page-link disabled">Próxima</span>
-            {% endif %}
-        </div>
