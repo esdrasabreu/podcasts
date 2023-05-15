@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Podcasts API</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border: 1px solid #ddd;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+<body>
+	<h1>Podcasts</h1>
+	<table id="podcasts-table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Episódio</th>
+				<th>Duração</th>
+				<th>Data</th>
+				<th>Link</th>
+				<th>Descrição</th>
+				<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$.ajax({
+				url: 'http://localhost:8080/podcasts',
+				type: 'GET',
+				dataType: 'json',
+				success: function(data) {
+					$.each(data, function(i, podcast) {
+						var tr = $('<tr>');
+						$('<td>').html(podcast.id).appendTo(tr);
+						$('<td>').html(podcast.episodio).appendTo(tr);
+						$('<td>').html(podcast.duracao).appendTo(tr);
+						$('<td>').html(podcast.data).appendTo(tr);
+						$('<td>').html(podcast.link).appendTo(tr);
+						$('<td>').html(podcast.descricao).appendTo(tr);
+						var actions = $('<td>');
+						$('<button>').html('Editar').click(function() {
+							editPodcast(podcast.id);
+						}).appendTo(actions);
+						$('<button>').html('Excluir').click(function() {
+							deletePodcast(podcast.id);
+						}).appendTo(actions);
+						actions.appendTo(tr);
+						tr.appendTo('#podcasts-table tbody');
+					});
+				},
+				error: function(xhr, status, error) {
+					alert('Erro ao buscar os podcasts: ' + error);
+				}
+			});
+
+			function editPodcast(id) {
+				// implementar função de edição aqui
+				alert('Editar podcast com ID ' + id);
+			}
+
+			function deletePodcast(id) {
+				if (confirm('Tem certeza que deseja excluir este podcast?')) {
+					$.ajax({
+						url: 'http://localhost:8080/podcasts/' + id,
+						type: 'DELETE',
+						dataType: 'json',
+						success: function(data) {
+							alert(data.message);
+							location.reload();
+						},
+						error: function(xhr, status, error) {
+							alert('Erro ao excluir o podcast: ' + error);
+						}
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>
