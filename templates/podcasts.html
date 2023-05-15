@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Podcasts</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Podcasts</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Episódio</th>
+                <th>Duração</th>
+                <th>Data</th>
+                <th>Link</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for podcast in podcasts %}
+            <tr>
+                <td>{{ podcast['episodio'] }}</td>
+                <td>{{ podcast['duracao'] }}</td>
+                <td>{{ podcast['data'] }}</td>
+                <td>{{ podcast['link'] }}</td>
+                <td>{{ podcast['descricao'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

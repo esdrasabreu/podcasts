@@ -17,7 +17,7 @@ def get_podcasts():
     podcasts = db.execute('SELECT * FROM podcast').fetchall()
     db.close()
     # return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
-    return render_template('index.html', podcasts=podcasts)
+    return render_template('podcasts.html', podcasts=podcasts)
 
 @app.route('/podcasts/<int:id>', methods=['GET'])
 def get_podcast(id):
