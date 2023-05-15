@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, make_response
+from flask import render_template
 import sqlite3
 
 app = Flask(__name__)
@@ -15,8 +16,8 @@ def get_podcasts():
     db = get_db()
     podcasts = db.execute('SELECT * FROM podcast').fetchall()
     db.close()
-    print(podcasts)
-    return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    # return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    return render_template('index.html', podcasts=podcasts)
 
 @app.route('/podcasts/<int:id>', methods=['GET'])
 def get_podcast(id):
