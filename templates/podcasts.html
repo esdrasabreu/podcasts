@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Podcasts</title>
+    <title>Lista de Podcasts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         table {
@@ -16,6 +16,19 @@
             border-bottom: 1px solid #ddd;
         }
     </style>
+    <script>
+        // Função para controlar a visibilidade do campo de entrada com base no tipo de filtro selecionado
+        function toggleInputType() {
+            var filtro = document.getElementById('filtro').value;
+            var valorInput = document.getElementById('valor');
+            
+            if (filtro === 'data') {
+                valorInput.type = 'date';
+            } else {
+                valorInput.type = 'text';
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -25,13 +38,15 @@
         <form method="GET" action="/podcasts" class="mb-3">
             <div class="form-row">
                 <div class="col">
-                    <input type="text" name="episodio" class="form-control" placeholder="Filtrar por episódio">
+                    <select name="filtro" id="filtro" class="form-control" onchange="toggleInputType()">
+                        <option value="data">Data</option>
+                        <option value="duracao">Duração</option>
+                        <option value="descricao">Descrição</option>
+                        <option value="episodio">Episódio</option>
+                    </select>
                 </div>
                 <div class="col">
-                    <input type="text" name="duracao" class="form-control" placeholder="Filtrar por duração">
-                </div>
-                <div class="col">
-                    <input type="text" name="descricao" class="form-control" placeholder="Filtrar por descrição">
+                    <input type="text" name="valor" id="valor" class="form-control" placeholder="Valor do filtro">
                 </div>
                 <div class="col">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -71,7 +86,4 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        </table>
-    </div>
-</body>
-</html>
+        </table

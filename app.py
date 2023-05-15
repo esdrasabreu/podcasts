@@ -11,23 +11,38 @@ def get_db():
     db.row_factory = sqlite3.Row
     return db
 
+
 @app.route('/podcasts', methods=['GET'])
 def get_podcasts():
+    filtro = request.args.get('filtro')
+    valor = request.args.get('valor')
+    
     db = get_db()
-    podcasts = db.execute('SELECT * FROM podcast').fetchall()
+    if filtro == 'data':
+        podcasts = db.execute("SELECT * FROM podcast WHERE data LIKE '%' || ? || '%'", (valor,)).fetchall()
+    elif filtro == 'duracao':
+        podcasts = db.execute("SELECT * FROM podcast WHERE duracao LIKE '%' || ? || '%'", (valor,)).fetchall()
+    elif filtro == 'descricao':
+        podcasts = db.execute("SELECT * FROM podcast WHERE descricao LIKE '%' || ? || '%'", (valor,)).fetchall()
+    elif filtro == 'episodio':
+        podcasts = db.execute("SELECT * FROM podcast WHERE episodio LIKE '%' || ? || '%'", (valor,)).fetchall()
+    else:
+        podcasts = db.execute('SELECT * FROM podcast').fetchall()
+    
     db.close()
-    # return make_response(jsonify([dict(podcast) for podcast in podcasts]), 200)
+    
     return render_template('podcasts.html', podcasts=podcasts)
 
-@app.route('/podcasts/<int:id>', methods=['GET'])
-def get_podcast(id):
-    db = get_db()
-    podcast = db.execute('SELECT * FROM podcast WHERE id = ?', (id,)).fetchone()
-    db.close()
-    if podcast:
-        return render_template('podcasts.html', podcasts=podcast)
-    else:
-        return render_template('podcasts.html', podcasts=podcast)
+
+# @app.route('/podcasts/<int:id>', methods=['GET'])
+# def get_podcast(id):
+#     db = get_db()
+#     podcast = db.execute('SELECT * FROM podcast WHERE id = ?', (id,)).fetchone()
+#     db.close()
+#     if podcast:
+#         return render_template('podcasts.html', podcasts=podcast)
+#     else:
+#         return render_template('podcasts.html', podcasts=podcast)
 
     
 @app.route('/podcasts/episodio/<string:episodio>', methods=['GET'])

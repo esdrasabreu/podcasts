@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from datetime import datetime
 
 urls = [
     'https://www.stitcher.com/show/super-soul-8521721',
@@ -29,6 +30,9 @@ for url in urls:
         duracao = podcast_item.find('div', class_='v-list-item__subtitle text-grey4 episodeInfo').get_text().strip().split('|')
         podcast["duracao"] = duracao[0].strip()
         podcast["data"] = duracao[1].strip()
+
+        podcast["data"] = datetime.strptime(podcast["data"], "%b %d, %Y").strftime("%d/%m/%Y")
+
         link = podcast_item.find('a', class_='text-none episode-link')['href']
         podcast["link"] = 'www.stitcher.com' + link
         subtitulo = podcast_item.find('div', class_='v-list-item__subtitle episodeDescription hidden-sm-and-down-bak hidden-xs-only text-grey5 mt-0 mt-md-1').get_text().strip().split('.')
