@@ -25,9 +25,10 @@ def get_podcast(id):
     podcast = db.execute('SELECT * FROM podcast WHERE id = ?', (id,)).fetchone()
     db.close()
     if podcast:
-        return make_response(jsonify(dict(podcast)), 200)
+        return render_template('podcasts.html', podcasts=podcast)
     else:
-        return make_response(jsonify({'message': 'Podcast not found'}), 404)
+        return render_template('podcasts.html', podcasts=podcast)
+
     
 @app.route('/podcasts/episodio/<string:episodio>', methods=['GET'])
 def get_podcast_by_episodio(episodio):
