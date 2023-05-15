@@ -1,7 +1,8 @@
+<!-- podcasts.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lista de Podcasts</title>
+    <title>Podcasts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         table {
@@ -19,6 +20,25 @@
 <body>
     <div class="container">
         <h1>Lista de Podcasts</h1>
+
+        <!-- Filtro de busca -->
+        <form method="GET" action="/podcasts" class="mb-3">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="episodio" class="form-control" placeholder="Filtrar por episódio">
+                </div>
+                <div class="col">
+                    <input type="text" name="duracao" class="form-control" placeholder="Filtrar por duração">
+                </div>
+                <div class="col">
+                    <input type="text" name="descricao" class="form-control" placeholder="Filtrar por descrição">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -43,7 +63,7 @@
                         <a href="/podcasts/{{ podcast['id'] }}/edit" class="btn btn-primary">Editar</a>
                     </td>
                     <td>
-                        <form action="/podcasts/{{ podcast['id'] }}" method="POST" onsubmit="return confirm('Tem certeza de que deseja excluir este podcast?')">
+                        <form action="/podcasts/{{ podcast['id'] }}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-danger">Excluir</button>
                         </form>
@@ -52,7 +72,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="/podcasts/new" class="btn btn-success">Novo Podcast</a>
     </div>
 </body>
 </html>
