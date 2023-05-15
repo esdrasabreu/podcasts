@@ -1,6 +1,7 @@
 <!-- podcasts.html -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Lista de Podcasts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -9,8 +10,9 @@
             width: 100%;
             border-collapse: collapse;
         }
-        
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -21,7 +23,7 @@
         function toggleInputType() {
             var filtro = document.getElementById('filtro').value;
             var valorInput = document.getElementById('valor');
-            
+
             if (filtro === 'data') {
                 valorInput.type = 'date';
             } else {
@@ -30,6 +32,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="container">
         <h1>Lista de Podcasts</h1>
@@ -57,6 +60,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Episódio</th>
                     <th>Duração</th>
                     <th>Data</th>
@@ -69,6 +73,7 @@
             <tbody>
                 {% for podcast in podcasts %}
                 <tr>
+                    <td>{{ podcast['id'] }}</td>
                     <td>{{ podcast['episodio'] }}</td>
                     <td>{{ podcast['duracao'] }}</td>
                     <td>{{ podcast['data'] }}</td>
@@ -86,4 +91,32 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        </table
+        </table>
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a class="page-link"
+                href="{{ url_for('get_podcasts', page=pagination.prev_num, per_page=pagination.per_page) }}">Anterior</a>
+            {% else %}
+            <span class="page-link disabled">Anterior</span>
+            {% endif %}
+
+            {% for page in pagination.iter_pages() %}
+            {% if page %}
+            {% if page == pagination.page %}
+            <span class="page-link current">{{ page }}</span>
+            {% else %}
+            <a class="page-link" href="{{ url_for('get_podcasts', page=page, per_page=pagination.per_page) }}">{{ page
+                }}</a>
+            {% endif %}
+            {% else %}
+            <span class="page-link dots">...</span>
+            {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+            <a class="page-link"
+                href="{{ url_for('get_podcasts', page=pagination.next_num, per_page=pagination.per_page) }}">Próxima</a>
+            {% else %}
+            <span class="page-link disabled">Próxima</span>
+            {% endif %}
+        </div>

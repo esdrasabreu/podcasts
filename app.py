@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from flask import render_template
+from flask_paginate import Pagination, get_page_args
 import sqlite3
 
 app = Flask(__name__)
@@ -31,7 +32,17 @@ def get_podcasts():
     
     db.close()
     
-    return render_template('podcasts.html', podcasts=podcasts)
+    # Configuração da paginação
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+    total = len(podcasts)
+    pagination = Pagination(page=page, per_page=per_page, total=total)
+
+    # Obtém os podcasts da página atual
+    start = offset
+    end = offset + per_page
+    podcasts_paginated = podcasts[start:end]
+
+    return render_template('podcasts.html', podcasts=podcasts_paginated, pagination=pagination)
 
 
 # @app.route('/podcasts/<int:id>', methods=['GET'])
