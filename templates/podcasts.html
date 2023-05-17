@@ -79,7 +79,7 @@
                     <td>{{ podcast['link'] }}</td>
                     <td>{{ podcast['descricao'] }}</td>
                     <td>
-                        <a href="https://www.w3schools.com/" target="_blank" class="btn btn-sucess">Ir</a>
+                        <a href="{{ podcast['link'] }}" class="btn btn-primary">Ir</a>
                     </td>
                 </tr>
                 {% endfor %}
