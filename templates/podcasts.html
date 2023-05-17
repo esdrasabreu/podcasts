@@ -31,11 +31,6 @@
             }
         }
     </script>
-    <script>
-        function redirectPodcast(link) {
-            window.location.href = link;
-        }
-    </script>
 </head>
 
 <body>
@@ -84,8 +79,8 @@
                     <td>{{ podcast['link'] }}</td>
                     <td>{{ podcast['descricao'] }}</td>
                     <td>
-                        <a href="#" onclick="redirectPodcast('{{ podcast['link'] }}')" class="btn btn-sucess">Ir</a>
-                    </td>
+                        <a href="{{ podcast['link'].replace('https://api-bpze.onrender.com/', '') }}" target="_blank" class="btn btn-sucess">Ir</a>
+                    </td>                    
                 </tr>
                 {% endfor %}
             </tbody>
