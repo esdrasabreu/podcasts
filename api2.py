@@ -10,8 +10,8 @@ conn.execute("""
     CREATE TABLE podcast (
         id INTEGER PRIMARY KEY,
         episodio TEXT,
-        duracao TEXT,
-        data TEXT,
+        duracao INTEGER,
+        data DATE,
         link TEXT,
         descricao TEXT
     )

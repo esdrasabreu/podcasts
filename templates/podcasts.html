@@ -3,68 +3,44 @@
 <html>
 
 <head>
-    <title>Lista de Podcasts</title>
+    <title>APIPod</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        html,body {
+            background-color:darkgray;
         }
 
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
     </style>
-    <script>
-        // Função para controlar a visibilidade do campo de entrada com base no tipo de filtro selecionado
-        function toggleInputType() {
-            var filtro = document.getElementById('filtro').value;
-            var valorInput = document.getElementById('valor');
-
-            if (filtro === 'data') {
-                valorInput.type = 'date';
-            } else {
-                valorInput.type = 'text';
-            }
-        }
-    </script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Lista de Podcasts</h1>
-
-        <!-- Filtro de busca -->
-        <form method="GET" action="/podcasts" class="mb-3">
-            <div class="form-row">
-                <div class="col">
-                    <select name="filtro" id="filtro" class="form-control" onchange="toggleInputType()">
-                        <option value="data">Data</option>
-                        <option value="duracao">Duração</option>
-                        <option value="descricao">Descrição</option>
-                        <option value="episodio">Episódio</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input type="text" name="valor" id="valor" class="form-control" placeholder="Valor do filtro">
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="#">APIPod</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#sobreModal">Sobre</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </form>
-
-        <table class="table table-striped">
+        </nav>
+        
+        
+        <table class="table table-striped" id="podcastsTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Episódio</th>
                     <th>Duração</th>
                     <th>Data</th>
-                    <th>Link</th>
                     <th>Descrição</th>
                     <th>Escutar</th>
                 </tr>
@@ -76,7 +52,6 @@
                     <td>{{ podcast['episodio'] }}</td>
                     <td>{{ podcast['duracao'] }}</td>
                     <td>{{ podcast['data'] }}</td>
-                    <td>{{ podcast['link'] }}</td>
                     <td>{{ podcast['descricao'] }}</td>
                     <td>
                         <a href="https://{{ podcast['link'] }}" target="_blank" class="btn btn-primary">Ir</a>
@@ -85,3 +60,38 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sobreModal" tabindex="-1" role="dialog" aria-labelledby="sobreModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sobreModalLabel">Sobre a APIPod</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>A APIPod é uma API de podcasts que permite aos usuários visualizar as principais informações relacionados a podcast e filtrá-las de acordo a categoria que preferir, como: data, duração, descrição além de poder ser redirecionado ao episódio de sua escolha.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#podcastsTable').DataTable();
+        });
+    </script>
+</body>
+
+</html>

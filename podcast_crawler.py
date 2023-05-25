@@ -8,7 +8,20 @@ urls = [
     'https://www.stitcher.com/show/the-plot-thickens-podcast',
     'https://www.stitcher.com/show/jeff-lewis-has-issues',
     'https://www.stitcher.com/show/unladylike',
-    'https://www.stitcher.com/show/the-problem-with-jon-stewart'
+    'https://www.stitcher.com/show/the-problem-with-jon-stewart',
+    'https://www.stitcher.com/show/wiser-than-me-with-julia-louis-dreyfus',
+    'https://www.stitcher.com/show/cold',
+    'https://www.stitcher.com/show/the-deck-investigates',
+    'https://www.stitcher.com/show/let-s-talk-off-camera-with-kelly-ripa',
+    'https://www.stitcher.com/show/comedy-gold-minds-with-kevin-hart',
+    'https://www.stitcher.com/show/hbos-succession-podcast',
+    'https://www.stitcher.com/show/bedtime-stories-of-the-ingleside-inn',
+    'https://www.stitcher.com/show/la-brega',
+    'https://www.stitcher.com/show/weird-finance',
+    'https://www.stitcher.com/show/dateline-2',
+    'https://www.stitcher.com/show/klepper',
+    'https://www.stitcher.com/show/levar-burton-reads',
+    'https://www.stitcher.com/show/not-skinny-but-not-fat'
 ]
 
 podcasts = []
@@ -31,7 +44,7 @@ for url in urls:
         podcast["duracao"] = duracao[0].strip()
         podcast["data"] = duracao[1].strip()
 
-        podcast["data"] = datetime.strptime(podcast["data"], "%b %d, %Y").strftime("%d/%m/%Y")
+        podcast["data"] = datetime.strptime(podcast["data"], "%b %d, %Y").strftime("%Y-%m-%d")
 
         link = podcast_item.find('a', class_='text-none episode-link')['href']
         podcast["link"] = 'www.stitcher.com' + link
